@@ -33,7 +33,7 @@ public class FindBookInfo {
 		            		+ "FROM BOOK b , AUTHOR a \r\n"
 		            		+ "WHERE b.AUTHOR_ID  = a.AUTHOR_ID \r\n"
 				            + "AND b.TITLE like ?";
-//				            + "AND b.TITLE = '" + search + "'";
+//				            + "AND b.TITLE = '" + search + "'"; 예전방식 -> 이건 prepareStatement를 쓰는 이유가 없다.
             
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, "%" + search + "%");
