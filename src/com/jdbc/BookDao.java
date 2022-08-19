@@ -108,5 +108,33 @@ public class BookDao {
 			e.printStackTrace();
 		}
 	}
+	
+	//find
+	public List<BookVo> findList(String title) {
+		List<BookVo> list2 = new ArrayList<BookVo>();
+		conn = getConnection();
+		String sql =  "SELECT b.BOOK_ID , b.TITLE , b.PUBS ,PUB_DATE, b.author_id \r\n"
+	         		+ "FROM BOOK b \r\n"
+	         		+ "WHERE b.TITLE like ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, "%" + title + "%");
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+            	int book_id = rs.getInt(1);
+            	String bookTitle = rs.getString(2);
+            	String pubs = rs.getString(3);
+            	String pub_date = rs.getString(4);
+            	int author_id = rs.getInt(5);
+            	BookVo vo = new BookVo(book_id, bookTitle, pubs, pub_date ,author_id);
+            	list2.add(vo);
+            }
 
+            getList();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list2;
+	}
 }

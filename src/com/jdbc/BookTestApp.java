@@ -16,6 +16,7 @@ public class BookTestApp {
 		String pubs = "";
 		String pub_date = "";
 		int author_id;
+		String find="";
 		
 		Boolean run = true;
 		Scanner sc = new Scanner(System.in);
@@ -23,9 +24,9 @@ public class BookTestApp {
 		
 		while (run) {
 			System.out.println();
-			System.out.println("------------------------------------------------------");
-			System.out.println(" 1.SELECT | 2.INSERT | 3.UPDATE | 4.DELETE | 5.종료");
-			System.out.println("------------------------------------------------------");
+			System.out.println("------------------------------------------------------------");
+			System.out.println(" 1.SELECT | 2.INSERT | 3.UPDATE | 4.DELETE | 5.찾기 | 6.종료");
+			System.out.println("------------------------------------------------------------");
 			System.out.print("선택> ");
 			int menuNo = sc.nextInt();
 			switch (menuNo) {
@@ -48,7 +49,6 @@ public class BookTestApp {
 				String insertInfo = sc.nextLine();
 				
 				System.out.print("작가번호 >> ");
-				//sc.nextInt(); //버퍼에 찌꺼기가 남아있기 때문에 강제로 한번 더 써준다.(따로 받지는 말자)
 				author_id = sc.nextInt();
 				
 				String[] s = insertInfo.split(" ");
@@ -85,6 +85,14 @@ public class BookTestApp {
 				dao.delete((long) book_id);
 				break;
 			case 5:
+				System.out.print("검색할 책의 제목을 입력해주세요 >> ");
+				find = sc.nextLine();
+				list = dao.findList(find);
+				for (BookVo vo : list) {
+					System.out.println(vo.toString());
+				}
+				break;
+			case 6:
 				System.out.println("종료");
 				sc.close();
 				run = false;
