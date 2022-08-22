@@ -1,12 +1,13 @@
-package com.jdbc;
+package com.jdbc.book;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AuthorSelectTest {
+public class BookSelectTest {
 
     public static void main(String[] args) {
         // 0. import java.sql.*;
@@ -24,18 +25,20 @@ public class AuthorSelectTest {
             System.out.println("접속성공");
 
             // 3. SQL문 준비 / 바인딩 / 실행
-            String query = " select author_id, author_name name, author_desc from author"
-                         + " order by author_id " ;
+            String query = " select BOOK_ID, TITLE, PUBS, PUB_DATE, AUTHOR_ID from book"
+                         + " order by BOOK_ID " ;
             pstmt = conn.prepareStatement(query);
 
             rs = pstmt.executeQuery();
 
             // 4.결과처리
             while (rs.next()) {
-                int authorId = rs.getInt("author_id");
-                String authorName = rs.getString("name");
-                String authorDesc = rs.getString("author_desc");
-                System.out.println(authorId + "\t" + authorName + "\t" + authorDesc + "\t");
+                int BOOK_ID = rs.getInt("BOOK_ID");
+                String TITLE = rs.getString("TITLE");
+                String PUBS = rs.getString("PUBS");
+                Date PUB_DATE = rs.getDate("PUB_DATE");
+                int AUTHOR_ID = rs.getInt("AUTHOR_ID");
+                System.out.println(BOOK_ID + "\t" + TITLE + "\t\t\t" +PUBS + "\t\t" + PUB_DATE + "\t"+ AUTHOR_ID + "\t");
             }
 
         } catch (ClassNotFoundException e) {

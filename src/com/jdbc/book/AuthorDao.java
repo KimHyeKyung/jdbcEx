@@ -1,4 +1,4 @@
-package com.jdbc;
+package com.jdbc.book;
 
 import java.sql.*;
 import java.util.ArrayList;

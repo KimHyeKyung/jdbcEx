@@ -1,12 +1,11 @@
-package com.jdbc;
+package com.jdbc.book;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class AuthorInsertTest {
-
+public class AuthorUpdateTest {
     public static void main(String[] args) {
         // 0. import java.sql.*;
         Connection conn = null;
@@ -22,16 +21,21 @@ public class AuthorInsertTest {
             System.out.println("접속성공");
 
             // 3. SQL문 준비 / 바인딩 / 실행
-            String query = "INSERT INTO author VALUES (seq_author_id.nextval, ?, ? )";
+            String query = " UPDATE author " + 
+                           "    SET author_name = ?, " + 
+                           "        author_desc = ?  " + 
+                           "  WHERE author_id = ? ";
+
             pstmt = conn.prepareStatement(query);
 
-            pstmt.setString(1, "성은정");
-            pstmt.setString(2, "Oracle 11g 프로그래밍 책 저자");
+            pstmt.setString(1, "이문열2");
+            pstmt.setString(2, "삼국지작가");
+            pstmt.setInt(3, 1);
 
             int count = pstmt.executeUpdate();
 
             // 4.결과처리
-            System.out.println(count + "건 처리");
+            System.out.println(count + "건 Update 완료");
 
         } catch (ClassNotFoundException e) {
             System.out.println("error: 드라이버 로딩 실패 - " + e);

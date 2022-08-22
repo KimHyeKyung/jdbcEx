@@ -1,11 +1,11 @@
-package com.jdbc;
+package com.jdbc.book;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class BookUpdateTest {
+public class AuthorDeleteTest {
     public static void main(String[] args) {
         // 0. import java.sql.*;
         Connection conn = null;
@@ -20,20 +20,16 @@ public class BookUpdateTest {
             conn = DriverManager.getConnection(url, "webdb", "1234");
             System.out.println("접속성공");
 
-            // 3. SQL문 준비 / 바인딩 / 실행
-            String query = " UPDATE book " + 
-                           "    SET TITLE = ? " + 
-                           "  WHERE BOOK_ID = ? ";
+         // 3. SQL문 준비 / 바인딩 / 실행
+            String query = "DELETE FROM author WHERE author_id = ?" ;
 
             pstmt = conn.prepareStatement(query);
-
-            pstmt.setString(1, "삭제할 제목");
-            pstmt.setInt(2, 10);
-
+            pstmt.setInt(1, 7);
+            
             int count = pstmt.executeUpdate();
 
             // 4.결과처리
-            System.out.println(count + "건 Update 완료");
+            System.out.println(count + "건 DELETE 완료");
 
         } catch (ClassNotFoundException e) {
             System.out.println("error: 드라이버 로딩 실패 - " + e);

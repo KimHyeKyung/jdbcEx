@@ -1,11 +1,12 @@
-package com.jdbc;
+package com.jdbc.book;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class AuthorDeleteTest {
+public class AuthorInsertTest {
+
     public static void main(String[] args) {
         // 0. import java.sql.*;
         Connection conn = null;
@@ -20,16 +21,17 @@ public class AuthorDeleteTest {
             conn = DriverManager.getConnection(url, "webdb", "1234");
             System.out.println("접속성공");
 
-         // 3. SQL문 준비 / 바인딩 / 실행
-            String query = "DELETE FROM author WHERE author_id = ?" ;
-
+            // 3. SQL문 준비 / 바인딩 / 실행
+            String query = "INSERT INTO author VALUES (seq_author_id.nextval, ?, ? )";
             pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, 7);
-            
+
+            pstmt.setString(1, "성은정");
+            pstmt.setString(2, "Oracle 11g 프로그래밍 책 저자");
+
             int count = pstmt.executeUpdate();
 
             // 4.결과처리
-            System.out.println(count + "건 DELETE 완료");
+            System.out.println(count + "건 처리");
 
         } catch (ClassNotFoundException e) {
             System.out.println("error: 드라이버 로딩 실패 - " + e);

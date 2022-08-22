@@ -1,4 +1,4 @@
-package com.jdbc;
+package com.jdbc.book;
 
 public class AuthorVo {
   private int    author_id;

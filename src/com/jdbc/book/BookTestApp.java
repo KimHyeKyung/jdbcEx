@@ -1,4 +1,4 @@
-package com.jdbc;
+package com.jdbc.book;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +86,7 @@ public class BookTestApp {
 				break;
 			case 5:
 				System.out.print("검색할 책의 제목을 입력해주세요 >> ");
+				sc.nextLine(); //버퍼에 찌꺼기가 남아있기 때문에 강제로 한번 더 써준다.(따로 받지는 말자)
 				find = sc.nextLine();
 				list = dao.findList(find);
 				for (BookVo vo : list) {
