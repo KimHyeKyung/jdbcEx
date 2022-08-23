@@ -1,8 +1,6 @@
 package com.kosta.jdbcdao.khk;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,9 +13,9 @@ public class AccountApp {
 		AccountDao account = new AccountDaoImpl();
 		
 		// 현재 날짜
-		SimpleDateFormat now = new SimpleDateFormat("yyyy-MM-dd");
-		Date time = new Date();
-		String TradingDate = now.format(time);
+//		SimpleDateFormat now = new SimpleDateFormat("yyyy-MM-dd");
+//		Date time = new Date();
+//		String TradingDate = now.format(time);
 		
 		boolean run = true;
 		long money;
@@ -46,13 +44,19 @@ public class AccountApp {
 				break;
 			case 4:
 				List<AccountVO> list = new ArrayList<AccountVO>();
+				System.out.print("조회 날짜를 입력해주세요(yyyy-MM-dd)\n시작>> ");
+				String TradingDate = sc.next();
 				list = account.getList(TradingDate);
-				System.out.println("조회일 : " + TradingDate);
-				for (AccountVO vo : list) {
-					System.out.println(	"입금액 : " + vo.getDeposit() + "\t"
-									+ "출금액 : " + vo.getWithdraw() + "\t"
-									+ "잔액 : " + vo.getBalance()	+ "\t"
-									+ "거래일 : "+vo.getTr_date());
+				if(list.size() == 0) {
+					System.out.println("해당 날짜의 거래내역이 없습니다.");
+				}else {
+					System.out.println("조회일 : " + TradingDate);
+					for (AccountVO vo : list) {
+						System.out.println(	"입금액 : " + vo.getDeposit() + "\t"
+										  + "출금액 : " + vo.getWithdraw() + "\t"
+										  + "잔액 : " + vo.getBalance()	+ "\t"
+										  + "거래일 : "+vo.getTr_date());
+					}
 				}
 				break;
 			case 5:

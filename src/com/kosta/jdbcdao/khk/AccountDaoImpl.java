@@ -35,7 +35,7 @@ public class AccountDaoImpl implements AccountDao{
 	int withdraw= 0;		//출금
 	String tr_date = "";	//거래일
 	int balance= 0;			//잔액
-	
+
 	// 잔액조회
 	public AccountVO getBalance() {
 		conn = getConnection();
@@ -83,7 +83,7 @@ public class AccountDaoImpl implements AccountDao{
 			e.printStackTrace();
 		}
 		
-		return vo;
+		return vo; //toString() 메소드는 자동으로 호출된다.
 	}
 	
 	//getList(거래일)
@@ -98,7 +98,6 @@ public class AccountDaoImpl implements AccountDao{
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, TradingDate);
-			System.out.println("TradingDate : " + TradingDate);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -149,6 +148,7 @@ public class AccountDaoImpl implements AccountDao{
 	// insertTradeInfo(예금,예금액) or insertTradeInfo(출금,출금액)
 	@Override
 	public int insertTradeInfo(String tr, Long money) {
+		getBalance();
 		conn = getConnection();
 		if(tr.equals("예금")) {
 			String sql =  "INSERT INTO account(seq_id, deposit, withdraw, tr_date, balance) \n"
@@ -169,8 +169,7 @@ public class AccountDaoImpl implements AccountDao{
 				e.printStackTrace();
 			}
 		}else {
-			if (money > this.balance) {
-				System.out.println("money : " + money + "   balance : " + this.balance);
+			if (money > vo.getBalance()) {
 				System.out.println("출금액이 부족합니다.");
 			} else {
 				String sql = "INSERT INTO account(seq_id, deposit, withdraw, tr_date, balance) \n"
