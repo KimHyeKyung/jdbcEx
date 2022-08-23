@@ -50,6 +50,23 @@ public class AccountDaoImpl implements AccountDao{
 			pstmt.setInt(1, 1); //seq_id desc한거 1번째 내역을 가져오기위해 셋팅
 			rs = pstmt.executeQuery();
 
+			/* 처음에 한 방법 -> return을 new AccountVO(seq_id, deposit, withdraw, tr_date, balance) ;로 했다.
+				 while (rs.next()) {
+					seq_id = rs.getInt("seq_id");			//일련번호
+					deposit = rs.getInt("deposit");			//입금
+					withdraw = rs.getInt("withdraw");		//출금
+					tr_date = rs.getString("tr_date");		//거래일
+					balance = rs.getInt("balance");			//잔액
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			return new AccountVO(seq_id, deposit, withdraw, tr_date, balance) ;
+			 */
+			
+			//두번째 방법 위에 vo가 선언되어있으니 vo에 set으로 값을 넣고 vo자체를 리턴하자.
 			while (rs.next()) {
 				seq_id = rs.getInt("seq_id");			//일련번호
 				deposit = rs.getInt("deposit");			//입금
@@ -57,12 +74,16 @@ public class AccountDaoImpl implements AccountDao{
 				tr_date = rs.getString("tr_date");		//거래일
 				balance = rs.getInt("balance");			//잔액
 			}
-			
+			vo.setSeq_id(seq_id);
+			vo.setDeposit(deposit);
+			vo.setWithdraw(withdraw);
+			vo.setTr_date(tr_date);
+			vo.setBalance(balance);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return new AccountVO(seq_id, deposit, withdraw, tr_date, balance) ;
+		return vo;
 	}
 	
 	//getList(거래일)
@@ -141,9 +162,9 @@ public class AccountDaoImpl implements AccountDao{
 				pstmt.setLong(3, money);	//잔액
 				
 				count = pstmt.executeUpdate();
-
-	            // 4.결과처리
-	            System.out.println(count + "건 처리");
+		
+		        // 4.결과처리
+		        System.out.println(count + "건 처리");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -160,16 +181,17 @@ public class AccountDaoImpl implements AccountDao{
 					pstmt.setInt(1, 0); // 예금
 					pstmt.setLong(2, money); // 출금
 					pstmt.setLong(3, money); // 잔액
-
+		
 					count = pstmt.executeUpdate();
-
+		
 					// 4.결과처리
 					System.out.println(count + "건 처리");
 				} catch (SQLException e) {
 					e.printStackTrace();
+					
 				}
 			}
-
+		
 		}
 		
 		return count;
@@ -206,3 +228,5 @@ public class AccountDaoImpl implements AccountDao{
 	}
 
 }
+
+
